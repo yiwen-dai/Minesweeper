@@ -1,0 +1,27 @@
+td div {
+  background-color: #c0c0c0;
+  width: 2rem;
+  height: 2rem;
+}
+
+td div.cover {
+  border: 0.25rem solid;
+  border-color: #fff #808080 #808080 #fff;
+}
+
+td div.uncover {
+  border: 0.1rem solid;
+  border-color: #808080;
+}
+
+table {
+  border: 0.5rem solid;
+  border-color: #808080 #fff #fff #808080;
+  padding: 1rem;
+}
+
+.wrapper {
+  padding: 1rem;
+  background-color: #c0c0c0;
+  width: 31rem;
+}
