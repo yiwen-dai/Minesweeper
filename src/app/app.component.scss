@@ -1,27 +1,85 @@
-td div {
+td span {
   background-color: #c0c0c0;
   width: 2rem;
   height: 2rem;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
 }
 
-td div.cover {
+td span.cover {
   border: 0.25rem solid;
   border-color: #fff #808080 #808080 #fff;
 }
 
-td div.uncover {
-  border: 0.1rem solid;
-  border-color: #808080;
+td span.flag {
+  color: red;
+  border: 0.25rem solid;
+  border-color: #fff #808080 #808080 #fff;
+}
+
+td span.uncover {
+  background-color: #c0c0c0;
+}
+
+td span.uncover.show-mine {
+  border: 0.25rem solid;
+  border-color: #c0c0c0;
 }
 
 table {
   border: 0.5rem solid;
   border-color: #808080 #fff #fff #808080;
   padding: 1rem;
+  border-spacing: 0;
+}
+
+td {
+  padding: 0;
 }
 
 .wrapper {
   padding: 1rem;
   background-color: #c0c0c0;
-  width: 31rem;
+  width: 28rem;
+}
+
+.zero {
+  opacity: 0;
+}
+
+.one {
+  color: #0100fe;
+}
+
+.two {
+  color: #017f01;
+}
+
+.three {
+  color: #fe0000;
+}
+
+.four {
+  color: #010080;
+}
+
+.five {
+  color: #810102;
+}
+
+.six {
+  color: #008081;
+}
+
+.seven {
+  color: black;
+}
+
+.eight {
+  color: #808080;
+}
+
+.curr {
+  color: red;
 }
