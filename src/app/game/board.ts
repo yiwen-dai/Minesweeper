@@ -64,22 +64,23 @@ export class Board{
     uncover(tile: Tile) {
         if (tile.mine) {
             tile.curr = true;
-            return 'lose';
+            this.gameOver();
+            return;
         } else if (tile.status == TileType.UNCOVER) {
             return;
         } else {
             tile.status = TileType.UNCOVER;
             --this.remainingTiles;
+            console.log(this.remainingTiles);
             if (this.remainingTiles < 1) {
-                return 'win';
+                this.won();
             }
             if (!tile.nearby) {
                 var neighbours = this.getNeighbours(tile.row, tile.col);
                 neighbours.forEach(nb => {
-                    this.uncover(nb);
+                   this.uncover(nb);
                 });
             }
-            return;
         }
     }
 
@@ -107,23 +108,25 @@ export class Board{
 
     // reveal all known knowledge from this tile
     revealAll(tile: Tile) {
-        var output = 1;
         if (tile.mine) {
-            return;
+            this.gameOver();
         }
         if (tile.nearby == tile.nearbyFlags) {
             var neighbours = this.getNeighbours(tile.row, tile.col);
             neighbours.forEach(nb => {
                 // incorrect flag => game over
                 if ((nb.status == TileType.FLAG) != (nb.mine)) {
-                    output = 0;
+                    this.gameOver();
                 }
             });
             neighbours.forEach(nb => {
-                this.uncover(nb);
+                if (!(nb.status == TileType.FLAG)) {
+                    this.uncover(nb);
+                } else {
+                    return;
+                }
             });
-        }
-        return output;    
+        } 
     }
 
     // when game ends all mines are shown
@@ -131,5 +134,14 @@ export class Board{
         this.allMines.forEach(mine => {
             mine.status = TileType.UNCOVER;
         })
+    }
+
+    gameOver() {
+        alert('you lost!')
+        this.showAllMines();
+    }
+
+    won() {
+        alert('you won!');
     }
 }

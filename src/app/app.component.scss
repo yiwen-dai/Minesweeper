@@ -1,36 +1,38 @@
 td span {
   background-color: #c0c0c0;
-  width: 2rem;
-  height: 2rem;
+  width: 50px;
+  height: 50px;
   text-align: center;
   vertical-align: middle;
   display: table-cell;
 }
 
 td span.cover {
-  border: 0.25rem solid;
+  border: 10px solid;
   border-color: #fff #808080 #808080 #fff;
 }
 
 td span.flag {
   color: red;
-  border: 0.25rem solid;
+  border: 10px solid;
   border-color: #fff #808080 #808080 #fff;
 }
 
 td span.uncover {
+  border: 10px solid;
+  border-color: #c0c0c0;
   background-color: #c0c0c0;
 }
 
 td span.uncover.show-mine {
-  border: 0.25rem solid;
+  border: 10px solid;
   border-color: #c0c0c0;
 }
 
 table {
-  border: 0.5rem solid;
+  border: 20px solid;
   border-color: #808080 #fff #fff #808080;
-  padding: 1rem;
+  padding: 40px;
   border-spacing: 0;
 }
 
@@ -39,9 +41,8 @@ td {
 }
 
 .wrapper {
-  padding: 1rem;
+  padding: 20px;
   background-color: #c0c0c0;
-  width: 28rem;
 }
 
 .zero {

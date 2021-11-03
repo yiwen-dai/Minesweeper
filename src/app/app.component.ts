@@ -9,13 +9,25 @@ import { Tile, TileType } from './game/tile';
 })
 export class AppComponent {
   title = 'minesweeper';
-  singleClick = true;
+  initialized = false;
+  board = new Board(10, 10, 10);
 
   public get TileType(): typeof TileType {
     return TileType; 
   }
 
-  board = new Board(10, 10, 10);
+  setup() {
+    console.log('HELLO');
+
+    var height = (<HTMLInputElement>document.getElementById("height")).value;
+    var width = (<HTMLInputElement>document.getElementById("width")).value;
+    var mines = (<HTMLInputElement>document.getElementById("mines")).value;
+    this.board = new Board(parseInt(height), parseInt(width), parseInt(mines))
+
+    console.log(height, width, mines);
+
+    this.initialized = true;
+  }
 
   getClass(tile: Tile) {
     var base = 'uncover ';
@@ -73,13 +85,7 @@ export class AppComponent {
   }
 
   checkTile(tile: Tile) {
-    const result = this.board.uncover(tile);
-    if (result === 'lose') {
-      this.gameOver();
-    } else if (result === 'win') {
-      alert("You won! :)");
-    }
-    console.log(this.board.remainingTiles);
+    this.board.uncover(tile);
   }
 
   flagTile(tile: Tile) {
@@ -88,13 +94,7 @@ export class AppComponent {
   }
 
   revealAll(tile: Tile) {
-    const result = this.board.revealAll(tile);
-    if (!result) {
-      this.gameOver();
-    }
+    this.board.revealAll(tile);
   }
 
-  gameOver() {
-    this.board.showAllMines();
-  }
 }

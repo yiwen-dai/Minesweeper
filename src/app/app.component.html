@@ -1,4 +1,20 @@
-<div class="wrapper">
+<div class="settings" *ngIf="!initialized">
+    Width: <input type="number" id="width" name="width" min="5" max="50"><br>
+    Height: <input type="number" id="height" name="height" min="5" max="50"><br>
+    Mines: <input type="number" id="mines" name="mines" min="5" max="50"><br><br>
+    <button (click)="setup()"> Submit </button>
+</div>
+
+<div class="header" *ngIf="initialized">
+  <table>
+    <tr>
+      <td>timer</td>
+      <td> {{board.remainingMines}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="wrapper" *ngIf="initialized">
   <table cellspacing="0">
     <tr *ngFor="let row of board.tiles;index as y;">
       <td *ngFor="let tile of row;index as x;"
