@@ -11,7 +11,7 @@
   <table>
     <tr>
       <td>timer</td>
-      <td>picture</td>
+      <td><img id="image" src="../assets/dormant.png" alt="face"></td>
       <td> {{board.remainingMines}}</td>
     </tr>
   </table>
@@ -23,7 +23,9 @@
       <td *ngFor="let tile of row;index as x;"
           (click)="checkTile(tile)"
           (contextmenu)="flagTile(tile)"
-          (dblclick)="revealAll(tile)">  
+          (dblclick)="revealAll(tile)"
+          (mousedown)="setImage(true)"
+          (mouseup)="setImage(false)">  
 
         <span class="flag" *ngIf="tile.status === TileType.FLAG">
           <svg style="width:24px;height:24px" viewBox="0 0 24 24">

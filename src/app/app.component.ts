@@ -10,7 +10,7 @@ import { Tile, TileType } from './game/tile';
 export class AppComponent {
   title = 'minesweeper';
   selectedDifficulty = 0;
-  board = new Board(8, 8, 20);
+  board = new Board(8, 8, 10);
 
   public get TileType(): typeof TileType {
     return TileType; 
@@ -104,8 +104,26 @@ export class AppComponent {
     return output;
   }
 
-  checkTile(tile: Tile) {
-    this.board.uncover(tile);
+  sleep(milliseconds: number) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+
+  setImage(click: boolean) {
+    var image = document.getElementById("image") as HTMLImageElement;
+    if (click) {
+      image.src = "../assets/click.png";
+    } else {
+      image.src = "../assets/dormant.png"
+    }
+
+  }
+
+  checkTile(tile: Tile) {    
+    this.board.uncover(tile);    
     ++this.board.numClicks;
   }
 

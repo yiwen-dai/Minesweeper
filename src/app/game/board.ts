@@ -95,7 +95,7 @@ export class Board{
             tile.status = TileType.UNCOVER;
             --this.remainingTiles;
             if (this.remainingTiles < 1) {
-                this.won();
+                this.win();
             }
             if (!tile.nearby) {
                 var neighbours = this.getNeighbours(tile.row, tile.col);
@@ -161,11 +161,14 @@ export class Board{
     }
 
     gameOver() {
-        alert('you lost!')
+        var image = document.getElementById("image") as HTMLImageElement;
+        image.src = "../assets/lose.png";
         this.showAllMines();
     }
 
-    won() {
+    win() {
+        var image = document.getElementById("image") as HTMLImageElement;
+        image.src = "../assets/win.png";
         alert('you won!');
     }
 }
