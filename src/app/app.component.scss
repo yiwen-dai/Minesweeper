@@ -1,38 +1,38 @@
 td span {
   background-color: #c0c0c0;
-  width: 50px;
-  height: 50px;
+  width: 1.5rem;
+  height: 1.5rem;
   text-align: center;
   vertical-align: middle;
   display: table-cell;
 }
 
 td span.cover {
-  border: 10px solid;
+  border: 0.2rem solid;
   border-color: #fff #808080 #808080 #fff;
 }
 
 td span.flag {
   color: red;
-  border: 10px solid;
+  border: 0.2rem solid;
   border-color: #fff #808080 #808080 #fff;
 }
 
 td span.uncover {
-  border: 10px solid;
+  border: 0.2rem solid;
   border-color: #c0c0c0;
   background-color: #c0c0c0;
 }
 
 td span.uncover.show-mine {
-  border: 10px solid;
+  border: 0.2rem solid;
   border-color: #c0c0c0;
 }
 
 table {
-  border: 20px solid;
+  border: 0.4rem solid;
   border-color: #808080 #fff #fff #808080;
-  padding: 40px;
+  padding: 0.8rem;
   border-spacing: 0;
 }
 
@@ -41,7 +41,15 @@ td {
 }
 
 .wrapper {
-  padding: 20px;
+  padding: 0.8rem;
+  margin: auto;
+  float: left;
+  background-color: #c0c0c0;
+}
+
+.header {
+  padding: 0.8rem;
+  margin: auto;
   background-color: #c0c0c0;
 }
 

@@ -3,6 +3,8 @@ import { Tile, TileType } from "./tile";
 export class Board{
     tiles: Tile[][] = [];
     allMines: Tile[] = [];
+    nonMines: Tile[] = [];
+    numClicks = 0;
 
     remainingTiles: number;
     remainingMines: number;
@@ -25,8 +27,9 @@ export class Board{
                     this.tiles[r][c].mine = true;
                     this.allMines.push(this.tiles[r][c]);
                     --unplacedMines;
+                } else {
+                    this.nonMines.push(this.tiles[r][c]);
                 }
-
                 --unplacedTiles;
             }
         }
@@ -60,8 +63,28 @@ export class Board{
         return output;
     }
 
+    // remove a tile from an array
+    remove(t: Tile, arr: Tile[]) {
+        arr.forEach((tile,index)=>{
+            if(tile == t) arr.splice(index,1);
+         });
+    }
+
     // when a player uncovers a tile
     uncover(tile: Tile) {
+        // ensure first click isnt mine
+        if (!this.numClicks) {
+            if (tile.mine) {
+                // swap mine posn with a non mine tile
+                var i = Math.floor(Math.random() * this.nonMines.length);
+                tile.mine = false;
+                this.nonMines.push(tile);
+                this.nonMines[i].mine = true;
+                this.allMines.push(this.nonMines[i]);
+                this.remove(tile, this.allMines);
+                this.remove(this.nonMines[i], this.nonMines);
+            }
+        }
         if (tile.mine) {
             tile.curr = true;
             this.gameOver();
@@ -71,7 +94,6 @@ export class Board{
         } else {
             tile.status = TileType.UNCOVER;
             --this.remainingTiles;
-            console.log(this.remainingTiles);
             if (this.remainingTiles < 1) {
                 this.won();
             }
@@ -89,11 +111,13 @@ export class Board{
         if (tile.status === TileType.FLAG) {
             tile.status = TileType.COVER;
             this.updateFlag(tile, -1);
+            ++this.remainingMines;
         } else if (tile.status === TileType.UNCOVER) {
             return;
         } else {
             tile.status = TileType.FLAG;
             this.updateFlag(tile, 1);
+            --this.remainingMines;
         }
         return;
     }

@@ -9,24 +9,44 @@ import { Tile, TileType } from './game/tile';
 })
 export class AppComponent {
   title = 'minesweeper';
-  initialized = false;
-  board = new Board(10, 10, 10);
+  selectedDifficulty = 0;
+  board = new Board(8, 8, 20);
 
   public get TileType(): typeof TileType {
     return TileType; 
   }
 
-  setup() {
-    console.log('HELLO');
+  changeDifficulty() {
+    var radios = document.getElementsByName("difficulty");
+    for (var i = 0; i < 3; ++i) {
+      var curr = radios[i] as HTMLInputElement;
+      if (curr.checked) {
+        if (i == this.selectedDifficulty) {
+          return;
+        } else {
+          this.selectedDifficulty = i;
+        }
+      }
+    }
 
-    var height = (<HTMLInputElement>document.getElementById("height")).value;
-    var width = (<HTMLInputElement>document.getElementById("width")).value;
-    var mines = (<HTMLInputElement>document.getElementById("mines")).value;
-    this.board = new Board(parseInt(height), parseInt(width), parseInt(mines))
+    switch (this.selectedDifficulty) {
+      // beginner
+      case 0:
+        this.board = new Board(8, 8, 10);
+      break;
+      
+      // intermediate
+      case 1:
+        this.board = new Board(16, 16, 40);
+      break;
 
-    console.log(height, width, mines);
-
-    this.initialized = true;
+      case 2:
+        this.board = new Board(24, 24, 99);
+      break;
+          
+      default:
+        break;
+    }
   }
 
   getClass(tile: Tile) {
@@ -86,6 +106,7 @@ export class AppComponent {
 
   checkTile(tile: Tile) {
     this.board.uncover(tile);
+    ++this.board.numClicks;
   }
 
   flagTile(tile: Tile) {
