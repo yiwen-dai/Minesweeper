@@ -33,10 +33,14 @@ export class Board{
                 --unplacedTiles;
             }
         }
+        this.updateNeighbours();
+        
+    }
 
-        // updates grid with neighbour mines
-        for (var r = 0; r < row; ++r) {
-            for (var c = 0; c < col; ++c) {
+    // updates grid with neighbour mines
+    updateNeighbours() {
+        for (var r = 0; r < this.row; ++r) {
+            for (var c = 0; c < this.col; ++c) {
                 if (this.tiles[r][c].mine) {
                     this.getNeighbours(r, c).forEach(tile => {
                         ++tile.nearby;
@@ -83,19 +87,19 @@ export class Board{
                 this.allMines.push(this.nonMines[i]);
                 this.remove(tile, this.allMines);
                 this.remove(this.nonMines[i], this.nonMines);
+                this.updateNeighbours();
             }
         }
         if (tile.mine) {
             tile.curr = true;
-            this.gameOver();
-            return;
+            return this.gameOver();
         } else if (tile.status == TileType.UNCOVER) {
             return;
         } else {
             tile.status = TileType.UNCOVER;
             --this.remainingTiles;
             if (this.remainingTiles < 1) {
-                this.win();
+                return this.win();
             }
             if (!tile.nearby) {
                 var neighbours = this.getNeighbours(tile.row, tile.col);
@@ -104,6 +108,7 @@ export class Board{
                 });
             }
         }
+        return "neutral";
     }
 
     // when a player flags a tile
@@ -164,11 +169,13 @@ export class Board{
         var image = document.getElementById("image") as HTMLImageElement;
         image.src = "../assets/lose.png";
         this.showAllMines();
+        return "lost";
     }
 
     win() {
         var image = document.getElementById("image") as HTMLImageElement;
         image.src = "../assets/win.png";
         alert('you won!');
+        return "won";
     }
 }

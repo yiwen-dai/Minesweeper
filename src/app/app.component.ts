@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Board } from './game/board';
 import { Tile, TileType } from './game/tile';
 
@@ -7,11 +7,46 @@ import { Tile, TileType } from './game/tile';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'minesweeper';
+export class AppComponent implements OnDestroy {
   selectedDifficulty = 0;
   board = new Board(8, 8, 10);
 
+  // ********************************************
+  // TIMER LOGIC
+  counter: number = 0;
+  timerRef: number = 0;
+  running: boolean = false;
+  time: string = "000";
+
+  startTimer() {
+    this.running = !this.running;
+    if (this.running) {
+      const startTime = Date.now() - (this.counter || 0);
+      this.timerRef = setInterval(() => {
+        this.counter = Math.floor((Date.now() - startTime) / 1000);
+        this.time = this.counter.toString();
+        while (this.time.length < 3) {
+          this.time = "0" + this.time;
+        }
+      });
+    } else {
+      clearInterval(this.timerRef);
+    }
+  }
+
+  clearTimer() {
+    this.running = false;
+    this.counter = 0;
+    clearInterval(this.timerRef);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timerRef);
+  }
+
+
+  // ********************************************
+  // BOARD LOGIC
   public get TileType(): typeof TileType {
     return TileType; 
   }
@@ -47,6 +82,8 @@ export class AppComponent {
       default:
         break;
     }
+
+    this.clearTimer();
   }
 
   getClass(tile: Tile) {
@@ -123,7 +160,13 @@ export class AppComponent {
   }
 
   checkTile(tile: Tile) {    
-    this.board.uncover(tile);    
+    if (!this.board.numClicks) {
+      this.startTimer();
+    }
+    var result = this.board.uncover(tile);    
+    if (result == "lost") {
+      this.startTimer();
+    }
     ++this.board.numClicks;
   }
 
